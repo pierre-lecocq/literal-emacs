@@ -40,7 +40,7 @@ If you want to learn more about the editor's configuration itself, please refer 
 Here is the menu:
 
 1. Write a =.org= file with code blocks and literal comments
-2. Generate some lisp code thanks to the Makefile (one command line. Period.)
+2. Generate some lisp code thanks to the =Makefile= (one command line. Period.)
 3. Load the newly generated configuration in Emacs
 
 The input is:
@@ -89,13 +89,13 @@ Let's imagine you want to put all your common configuration in a single file tha
 
 For this, we need to write some code blocks whose code will be generated in the =lisp/common.el= file. For this, let's see an example:
 
-#+begin_comment
+#+begin_html
 #+begin_src emacs-lisp :tangle lisp/common.el
 (setq debug-on-error t)
 (setq user-full-name "My name"
       user-mail-address "my.name@mail.com")
 #+end_src
-#+end_comment
+#+end_html
 
 First, let's focus on the =begin_src= tag line.
 
@@ -130,7 +130,7 @@ Note that if you change something in your =emacs.org= file, you must run =make= 
 In order to test this proof of concept or your own literal configuration attempt, let's follow these very easy steps:
 
 1. Type =make= to generate the =emacs.el= final file and all the =lisp/*.el= files
-2. Type =emacs -Q -l emacs.el= to try it out. The =-Q= option anihil all other configuration and the =-l= option make this precise =emacs.el= file the main configuration file
+2. Type =emacs -Q -l emacs.el= to try it out. The =-Q= option anihilate all other configuration and the =-l= option make this precise =emacs.el= file the main configuration file
 
 You should have a brand new configured Emacs running now.
 
@@ -144,7 +144,7 @@ Then, when you launch Emacs, it will load the new generated =emacs.el= file!
 
 * Conclusion
 
-As you can see, the /method/ is here, but all the work belongs to you.
+As you can see, the /method/ is here, but all the /work/ belongs to you.
 
 You MUST write and try your own Emacs configuration since it MUST fit YOUR needs.
 
