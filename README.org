@@ -1,0 +1,153 @@
+#+TITLE: Literal Emacs configuration tutorial
+#+AUTHOR: Pierre Lecocq
+#+EMAIL: pierre.lecocq@gmail.com
+#+STARTUP: content
+
+* Introduction
+
+** The goal
+
+In our world, there are two main ways to manage your Emacs configuration:
+
+- one and only one configuration file (for the minimalists)
+- several files that separate configuration tasks and goals (for the arrangement maniacs)
+
+And there are two main ways to write your Emacs configuration:
+
+- write pure emacs lisp code
+- write prose that embed emacs lisp code that is extracted afterwards by a "generator". This is called "[[https://en.wikipedia.org/wiki/Literate_programming][literate programming]]"
+
+We will see here how to generate an Emacs configuration organized in several files using the *literate programming* approch.
+
+** The tools
+
+In order to reach our goal, we will use:
+
+- [[https://www.gnu.org/software/emacs/][Emacs]] (thanks, genious)
+- [[http://orgmode.org/][org-mode]] to extract emacs lisp code from a literal file. *Org mode* is an amazing tool "for keeping notes, maintaining TODO lists, planning projects, and authoring documents with a fast and effective plain-text system".
+- a [[https://www.gnu.org/software/make/][Makefile]] to generate the final emacs lisp code (but you can do it with a shell script or even by hand in your terminal)
+
+** Disclaimer
+
+This is just a *proof of concept*.
+
+It is *not* a document about Emacs configuration but just a way to write, generate, organize and deal with your Emacs preferences.
+
+If you want to learn more about the editor's configuration itself, please refer to the [[https://github.com/pierre-lecocq/emacs4developers][Emacs for developers]] tutorial.
+
+** The workflow
+
+Here is the menu:
+
+1. Write a =.org= file with code blocks and literal comments
+2. Generate some lisp code thanks to the Makefile (one command line. Period.)
+3. Load the newly generated configuration in Emacs
+
+The input is:
+
+- one =emacs.org= file
+- one =Makefile=
+
+The output is:
+
+- one =emacs.org= file (no change)
+- one =Makefile= (no change)
+- one =emacs.el= file (generated from the org file)
+- one =lisp= folder
+- several lisp files in the =lisp= folder (generated from the org file)
+  - =lisp/common.el= that setup all the common configuration variables
+  - =lisp/packages.el= that installs every external packages you need
+  - =lisp/hooks.el= that gather all hooks
+  - one =lisp/vendor= folder where the Emacs internal package manager will download and store the packages (can be tweaked from the Emacs configuration itself)
+
+Of course, this nomenclature is an example and a dummy one and you are free to change and adapt it to your own needs and wills. I encourage you to do so and experiment by yourself. Let's hack this tutorial!
+
+* The org file
+
+** The general idea
+
+The idea is to write a =emacs.org= file, with comments (regular text) and code (that will engender the Emacs final configuration).
+
+The prose (or "comments", a.ka. "regular text") is written like in any regular text file. No need to encapsulate it in any kind of tag. I let you take a look at the [[http://orgmode.org/manual/Markup.html][org-mode syntax documentation]] if you do not know it already.
+
+The code blocks is the interesting parts. It will, after the "generator" pass, produce some Emacs lisp code that IS (/will be/) your Emacs configuration.
+They are surrended by tags that indicate to the "generator" what kind of code it is and what is their final location.
+
+To sum up:
+
+1. we write a regular org file with all text we want
+2. we embed some code blocks
+3. we use the "generator" against this =.org= file to produce the final Emacs configuration
+
+Easy as pie.
+
+** The file content
+
+=Emacs= has a very powerful and large range of configuration variables/functions. It all depends on your usage of the editor and on your patience to read the documentation.
+
+Let's imagine you want to put all your common configuration in a single file that will be executed in a first place, before everything else in your configuration chain.
+
+For this, we need to write some code blocks whose code will be generated in the =lisp/common.el= file. For this, let's see an example:
+
+#+begin_comment
+#+begin_src emacs-lisp :tangle lisp/common.el
+(setq debug-on-error t)
+(setq user-full-name "My name"
+      user-mail-address "my.name@mail.com")
+#+end_src
+#+end_comment
+
+First, let's focus on the =begin_src= tag line.
+
+- it begins by =begin_src= and ends by =end_src= that tells the "generator" that the text between is code
+- it provides the language type to generate. Here, we want =emacs-lisp=
+- and, with the =:tangle= argument, it tells where the final code should be placed
+
+Of course, we can multiply the code blocks until the infinite. The idea is to separate the code blocks by literal comments in order to tidy them AND to take advantage of the power of the outline concept of =org-mode.=
+
+
+*PLEASE NOW REFER TO THE WHOLE (BUT SIMPLE) EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./emacs.org][emacs.org]]
+
+
+* The Makefile
+
+The =Makefile= will help us, with one command to generate and execute the =emacs-lisp= code.
+
+
+*PLEASE NOW REFER TO THE MAKEFILE EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./Makefile][Makefile]]
+
+
+Here are the simple command you can run:
+
+- =make= to generate the emacs lisp code
+- =make clean= to clean up everything and be ready to begin from zero
+- =make love= (because ... yes) to clean up everything AND build your Emacs configuration again from zero
+
+Note that if you change something in your =emacs.org= file, you must run =make= again. And you should NEVER edit the =emacs.el= generated file.
+
+* Testing
+
+In order to test this proof of concept or your own literal configuration attempt, let's follow these very easy steps:
+
+1. Type =make= to generate the =emacs.el= final file and all the =lisp/*.el= files
+2. Type =emacs -Q -l emacs.el= to try it out. The =-Q= option anihil all other configuration and the =-l= option make this precise =emacs.el= file the main configuration file
+
+You should have a brand new configured Emacs running now.
+
+* Adopting
+
+Once you have tweaked and adpated everything to your needs, you may want to make this =emacs.el= your default configuration file.
+
+Here is a very easy workaround to achieve this: create a =~/.emacs= file and set its content to =(load-file "/path/to/the/dir/that/contains/the/generated/emacs.el")=
+
+Then, when you launch Emacs, it will load the new generated =emacs.el= file!
+
+* Conclusion
+
+As you can see, the /method/ is here, but all the work belongs to you.
+
+You MUST write and try your own Emacs configuration since it MUST fit YOUR needs.
+
+Writing in literate programming is a demarche that requires some time but can bring you a lot benefits in term of organization and readability, especially with the Emacs users gift that is =org-mode=.
+
+If you want to see a real-world example that is used every day, you can see my own Emacs configuration repository [[https://github.com/pierre-lecocq/emacs.d][here]]. It might differ a little bit from this tutorial in term of shape but the idea is exactly the same.
