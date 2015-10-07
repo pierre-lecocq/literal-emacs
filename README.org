@@ -133,7 +133,6 @@ Here are the simple command you can run:
 - =make= to generate the emacs lisp code
 - =make test= to test the generated emacs lisp configuration
 - =make clean= to clean up everything and be ready to begin from zero
-- =make love= (because ... yes) to clean up everything AND build your Emacs configuration again from zero
 
 Note that if you change something in your =emacs.org= file, you must run =make= again. And you should NEVER edit the =emacs.el= generated file.
 
