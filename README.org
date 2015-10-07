@@ -106,7 +106,7 @@ First, let's focus on the =begin_src= tag line.
 Of course, we can multiply the code blocks until the infinite. The idea is to separate the code blocks by literal comments in order to tidy them AND to take advantage of the power of the outline concept of =org-mode.=
 
 
-*PLEASE NOW REFER TO THE WHOLE (BUT SIMPLE) EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./emacs.org][emacs.org]]
+*PLEASE NOW REFER TO THE WHOLE (BUT SIMPLE) EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./demo/emacs.org][emacs.org]]
 
 
 * The Makefile
@@ -114,12 +114,13 @@ Of course, we can multiply the code blocks until the infinite. The idea is to se
 The =Makefile= will help us, with one command to generate and execute the =emacs-lisp= code.
 
 
-*PLEASE NOW REFER TO THE MAKEFILE EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./Makefile][Makefile]]
+*PLEASE NOW REFER TO THE MAKEFILE EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./demo/Makefile][Makefile]]
 
 
 Here are the simple command you can run:
 
 - =make= to generate the emacs lisp code
+- =make test= to test the generated emacs lisp configuration
 - =make clean= to clean up everything and be ready to begin from zero
 - =make love= (because ... yes) to clean up everything AND build your Emacs configuration again from zero
 

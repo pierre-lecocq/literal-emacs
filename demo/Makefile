@@ -1,6 +1,6 @@
 #
 # File: Makefile
-# Time-stamp: <2015-10-06 23:01:42>
+# Time-stamp: <2015-10-07 08:19:16>
 # Copyright (C) 2015 Pierre Lecocq
 # Description: Makefile used to generate a lisp file from an org file
 #
@@ -18,7 +18,7 @@ DEST_FILE=$(SRC_DIR)/emacs.el
 DEST_DIR=$(SRC_DIR)/lisp
 
 # I love poneys
-.PHONY: build clean love
+.PHONY: test build clean love
 
 # Main rule
 all: build
@@ -29,6 +29,10 @@ build:
 	emacs --batch \
 		--eval "(require 'org)" \
 		--eval "(org-babel-load-file \"$(SRC_FILE)\")"
+
+# Testing is doubting
+test:
+	emacs -Q -l $(DEST_FILE)
 
 # Housework
 clean:
