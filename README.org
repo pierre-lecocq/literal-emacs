@@ -117,6 +117,17 @@ And look at its [[https://raw.githubusercontent.com/pierre-lecocq/literal-emacs/
 
 The =Makefile= will help us, with one command to generate and execute the =emacs-lisp= code.
 
+The key is to write a rule that will call Emacs with some code in argument:
+
+- Require the =org-mode= package
+- Use =org-babel= to parse the file and extract the code blocks content
+
+Here is the command line if you want to run it by yourself (in the =demo= folder of this repository, for example):
+
+#+begin_src sh
+emacs --batch --eval "(require 'org)" --eval "(org-babel-load-file \"emacs.org\")"
+#+end_src
+
 
 *PLEASE NOW REFER TO THE MAKEFILE EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./demo/Makefile][Makefile]]
 
@@ -138,6 +149,8 @@ In order to test this proof of concept or your own literal configuration attempt
 2. Type =emacs -Q -l emacs.el= to try it out. The =-Q= option anihilate all other configuration and the =-l= option make this precise =emacs.el= file the main configuration file
 
 You should have a brand new configured Emacs running now.
+
+Of course the sample [[https://github.com/pierre-lecocq/literal-emacs/blob/master/demo/Makefile][Makefile]] provides a =make test= rule to automate this.
 
 * Adopting
 
