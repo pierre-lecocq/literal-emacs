@@ -90,11 +90,11 @@ Let's imagine you want to put all your common configuration in a single file tha
 For this, we need to write some code blocks whose code will be generated in the =lisp/common.el= file. For this, let's see an example:
 
 #+begin_src emacs-lisp
-##+begin_src emacs-lisp :tangle lisp/common.el
-(setq debug-on-error t)
-(setq user-full-name "My name"
-      user-mail-address "my.name@mail.com")
-##+end_src
+ #+begin_src emacs-lisp :tangle lisp/common.el
+ (setq debug-on-error t)
+ (setq user-full-name "My name"
+       user-mail-address "my.name@mail.com")
+ #+end_src
 #+end_src
 
 First, let's focus on the =begin_src= tag line.
