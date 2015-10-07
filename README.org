@@ -17,7 +17,7 @@ And there are two main ways to write your Emacs configuration:
 - write pure emacs lisp code
 - write prose that embed emacs lisp code that is extracted afterwards by a "generator". This is called "[[https://en.wikipedia.org/wiki/Literate_programming][literate programming]]"
 
-We will see here how to generate an Emacs configuration organized in several files using the *literate programming* approch.
+We will see here how to generate an Emacs configuration organized in several files using the literate programming approch.
 
 ** The tools
 
@@ -40,21 +40,18 @@ If you want to learn more about the editor's configuration itself, please refer 
 Here is the menu:
 
 1. Write a =.org= file with code blocks and literal comments
-2. Generate some lisp code thanks to the =Makefile= (one command line. Period.)
+2. Generate some emacs lisp code thanks to the =Makefile= (one command line. Period.)
 3. Load the newly generated configuration in Emacs
 
-The input is:
+The input is (in the =demo= folder provided with this repository):
 
 - one =emacs.org= file
 - one =Makefile=
 
 The output is:
 
-- one =emacs.org= file (no change)
-- one =Makefile= (no change)
 - one =emacs.el= file (generated from the org file)
-- one =lisp= folder
-- several lisp files in the =lisp= folder (generated from the org file)
+- several emacs lisp files (also generated from the org file)
   - =lisp/common.el= that setup all the common configuration variables
   - =lisp/packages.el= that installs every external packages you need
   - =lisp/hooks.el= that gather all hooks
@@ -70,13 +67,13 @@ The idea is to write a =emacs.org= file, with comments (regular text) and code (
 
 The prose (or "comments", a.ka. "regular text") is written like in any regular text file. No need to encapsulate it in any kind of tag. I let you take a look at the [[http://orgmode.org/manual/Markup.html][org-mode syntax documentation]] if you do not know it already.
 
-The code blocks is the interesting parts. It will, after the "generator" pass, produce some Emacs lisp code that IS (/will be/) your Emacs configuration.
+The code blocks is the interesting parts. It will, after the "generator" pass, produce some emacs lisp code that IS (/will be/) your Emacs configuration.
 They are surrended by tags that indicate to the "generator" what kind of code it is and what is their final location.
 
 To sum up:
 
 1. we write a regular org file with all text we want
-2. we embed some code blocks
+2. we embed some code blocks and tell in which file the code will be located
 3. we use the "generator" against this =.org= file to produce the final Emacs configuration
 
 Easy as pie.
@@ -90,37 +87,36 @@ Let's imagine you want to put all your common configuration in a single file tha
 For this, we need to write some code blocks whose code will be generated in the =lisp/common.el= file. For this, let's see an example:
 
 #+begin_src emacs-lisp
-> #+begin_src emacs-lisp :tangle lisp/common.el
-> (setq debug-on-error t)
-> (setq user-full-name "My name"
->       user-mail-address "my.name@mail.com")
-> #+end_src
+>    #+begin_src emacs-lisp :tangle lisp/common.el
+>    (setq debug-on-error t)
+>    (setq user-full-name "My name"
+>          user-mail-address "my.name@mail.com")
+>    #+end_src
 #+end_src
 
-/Note: remove the > characters in the begining of each lines/
+/Note: remove the '>' characters in the begining of each lines/
 
 First, let's focus on the =begin_src= tag line.
 
 - it begins by =begin_src= and ends by =end_src= that tells the "generator" that the text between is code
 - it provides the language type to generate. Here, we want =emacs-lisp=
-- and, with the =:tangle= argument, it tells where the final code should be placed
+- and, with the =:tangle= argument (=lisp/common.el= here, but it can be whatever you want), it tells where the final code should be placed
 
-Of course, we can multiply the code blocks until the infinite. The idea is to separate the code blocks by literal comments in order to tidy them AND to take advantage of the power of the outline concept of =org-mode.=
+Of course, we can multiply the code blocks to the infinite. The idea is to separate the code blocks by literal comments in order to tidy them AND to take advantage of the power of the outline concept of =org-mode.=
 
 
 *PLEASE NOW REFER TO THE WHOLE (BUT SIMPLE) EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./demo/emacs.org][emacs.org]]
 
 And look at its [[https://raw.githubusercontent.com/pierre-lecocq/literal-emacs/master/demo/emacs.org][raw content]] to see how it is written.
 
-
 * The Makefile
 
-The =Makefile= will help us, with one command to generate and execute the =emacs-lisp= code.
+The =Makefile= will help us, with one command to generate and execute the emacs lisp code.
 
 The key is to write a rule that will call Emacs with some code in argument:
 
 - Require the =org-mode= package
-- Use =org-babel= to parse the file and extract the code blocks content
+- Use the function =org-babel-load-file= to parse the file, extract the code blocks content and execute it
 
 Here is the command line if you want to run it by yourself (in the =demo= folder of this repository, for example):
 
@@ -129,7 +125,7 @@ emacs --batch --eval "(require 'org)" --eval "(org-babel-load-file \"emacs.org\"
 #+end_src
 
 
-*PLEASE NOW REFER TO THE MAKEFILE EXAMPLE GIVEN WITH THIS TUTORIAL HERE*: [[./demo/Makefile][Makefile]]
+*PLEASE NOW REFER TO THE SAMPLE MAKEFILE GIVEN WITH THIS TUTORIAL HERE*: [[./demo/Makefile][Makefile]]
 
 
 Here are the simple command you can run:
