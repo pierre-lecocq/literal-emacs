@@ -163,4 +163,4 @@ You MUST write and try your own Emacs configuration since it MUST fit YOUR needs
 
 Writing in literate programming is a demarche that requires some time but can bring you a lot benefits in term of organization and readability, especially with the Emacs users gift that is =org-mode=.
 
-If you want to see a real-world example that is used every day, you can see my own Emacs configuration repository [[https://github.com/pierre-lecocq/emacs.d][here]]. It might differ a little bit from this tutorial in term of shape but the idea is exactly the same.
+If you want to see a real-world example that is used every day, you can see my own Emacs configuration repository [[https://github.com/pierre-lecocq/emacs.d/tree/literal][here]]. It might differ a little bit from this tutorial in term of shape but the idea is exactly the same.
